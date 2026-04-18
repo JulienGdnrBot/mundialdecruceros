@@ -30,6 +30,20 @@ Ejemplos: `cruceros_bookings`, `cruceros_leads`, `cruceros_packages`.
 
 Migraciones: `supabase/migrations/NNN_nombre.sql`, RLS activo, policies explícitas. **Nunca** correr `db:reset` contra producción.
 
+## Autenticación multi-sitio (si este sitio necesita cuentas)
+
+Todos los sitios de Johana **comparten `auth.users`** (mismo proyecto Supabase). Una misma persona puede pertenecer a varios sitios — se etiqueta su membresía en `auth.users.raw_app_meta_data.sites` (text[] de slugs).
+
+- **Slug de este sitio**: `cruceros`.
+- **Implementación de referencia**: `/home/julien/Workspace/johanas-websites/colombia-ecommerce/` — ver `supabase/migrations/013_auth_site_scoping.sql`, `lib/auth/site-scope.ts`, `components/auth/AuthForm.tsx`, `app/api/auth/grant-site-access/route.ts`.
+
+Si este sitio alguna vez necesita login, seguir el patrón:
+
+1. **Migración propia** que cree `cruceros_profiles` (FK a `auth.users.id`) + función/trigger `cruceros_on_auth_user_created` que dispara **solo** cuando `new.raw_user_meta_data->>'site' = 'cruceros'`. El trigger inserta en `cruceros_profiles` y appendea `'cruceros'` a `raw_app_meta_data.sites` (dedup).
+2. **Signup client-side** pasa `options.data.site = 'cruceros'` a `supabase.auth.signUp`.
+3. **Login**: si `user.app_metadata.sites` no incluye `'cruceros'`, llamar a un endpoint propio `/api/auth/grant-site-access` que, con service-role, agrega el slug y crea la fila en `cruceros_profiles`.
+4. **Jamás** compartir trigger ni tabla `_profiles` con otro sitio — cada repo es dueño del suyo.
+
 ## Flujo de trabajo: commit + push a `main` SIEMPRE
 
 **Regla dura**: CADA cambio se commitea y pushea a `main` **inmediatamente**, salvo que Johana pida explícitamente "probar primero" — ahí uso `staging`.
