@@ -2,7 +2,20 @@
 
 ## Qué es este proyecto
 
-**Mundial de Cruceros** es el sitio de la agencia de viajes especializada en cruceros de Johana. Todavía es un repo casi vacío (solo README + vercel.json) — queda por construir la primera versión.
+**Mundial de Cruceros** es la marca principal (desde 1980) del grupo Mundial / Centro de Cruceros:
+representante oficial de Norwegian (NCL) y exclusivo de Oceania y Regent en Colombia. Público más
+pequeño y exclusivo que Centro de Cruceros (lujo, upper premium y familias con NCL).
+
+**Estado (10 nov 2026):** proyecto Next.js creado con la marca (logo, colores, favicon) y una
+portada provisional «Estamos preparando nuestro nuevo sitio». Todavía **no hay proyecto en Vercel**.
+
+- Diagnóstico + cuestionario enviados al cliente: `docs/Mundial_de_Cruceros_Diagnostico_y_Cuestionario.docx`.
+- **No se reutiliza contenido del WordPress actual** (Julien, 10 nov 2026: mucha info está mal).
+  Estructura, textos y contenidos se definen con las respuestas del cliente; no rescatar páginas
+  ni textos del sitio viejo por iniciativa propia.
+- El buscador/reservas es la **app de reservas de RV3 + su base de datos de navieras**: producto
+  de RV3 que se cobra aparte. Nunca presentarlo al cliente como «reutilizado de Centro de Cruceros».
+- Marca: `app/globals.css` (Pantone 286 C #0033A1, 116 C #FFCD00) y `public/marca/`.
 
 ## Con quién trabajo
 
@@ -11,16 +24,20 @@
 - **No es técnica**: no usa terminal, SSH ni git. Instrucciones paso a paso, concretas ("abrí esta URL, hacé clic acá, decime si ves X").
 - Pedir screenshots cuando algo no esté claro.
 
-## Stack previsto (igual a los demás sitios de Johana)
+## Stack (igual a los demás sitios de Johana)
 
 - **Next.js 16** (App Router, Fluid Compute)
 - **React + TypeScript**
 - **Tailwind CSS v4** (modo CSS-first `@theme`)
-- **Hosting: Vercel** (región `gru1`, ya configurado en `vercel.json`)
-
-Cuando haya que iniciar el proyecto, usar `npx create-next-app@latest` con TypeScript, Tailwind, App Router, sin Turbopack si Johana no lo pide.
+- **Hosting: Vercel**, región **`iad1` (Estados Unidos)** en `vercel.json`. Nunca `gru1`
+  (Brasil): sale más caro. Todos los proyectos del equipo pasaron a `iad1` el 10 nov 2026.
+- Fuente: Futura (manual) es de pago → se usa **Jost** (Google Fonts) hasta tener licencia web.
 
 ## Supabase
+
+**Proyecto: el de Estados Unidos, `rukztthxfjdfjscjtshr` (us-east-1).** El de Brasil
+(`zkogcdvvfabpvxnazrqg`) está bloqueado en solo lectura desde la migración del 10 nov 2026: nunca
+usarlo, aunque algún `.env.local` viejo de otro repo todavía lo tenga. Ver `.env.example`.
 
 Si se agrega DB (catálogo de cruceros, reservas, leads), **todas las tablas deben ir prefijadas `cruceros_`** — Supabase es compartido entre todos los sitios de Johana.
 
@@ -54,7 +71,7 @@ git commit -m "<mensaje claro>"
 git push origin main
 ```
 
-Vercel auto-deploya `main` a producción.
+Vercel auto-deploya `main` a producción **una vez creado el proyecto en Vercel** (todavía no existe: crearlo es un cambio de configuración que necesita la aprobación de Johana).
 
 ### Cuándo proponer staging a Johana (proactivo, en español)
 

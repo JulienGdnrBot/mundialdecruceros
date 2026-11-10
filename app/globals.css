@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+/* PALETA DE MARCA — sale del Manual de Marca de Mundial de Cruceros (nov 2026).
+
+     Pantone 286 C   AZUL      #0033A1   (CMYK 100/79/16/3 · RGB 0/51/161)
+     Pantone 116 C   AMARILLO  #FFCD00   (CMYK 0/20/96/0  · RGB 255/205/0)
+
+   Solo esos dos son colores de marca. Los -dark / -light son derivados para
+   hover y fondos suaves, no se usan como color propio.
+
+   OJO: los PNG del logo que mandó el cliente (zip «logo_mundialcruceros», 10 nov
+   2026) traen el azul en #1A5197 y el amarillo en #F5C114, no los del manual.
+   El sitio usa los del manual; está preguntado al cliente cuál manda.
+
+   Fondos permitidos por el manual: oscuros al 80 % o más, o pasteles al 20 %
+   como máximo, siempre con contraste. Nada de rojos, verdes o degradados
+   detrás del logo («usos no permitidos»). */
+
+:root {
+  --azul: #0033a1;
+  --azul-dark: #00256f;
+  --azul-light: #e6ecf7;
+  --amarillo: #ffcd00;
+  --amarillo-light: #fff7d6;
+  --tinta: #0d1b3a;
+  --fondo: #ffffff;
+  --fondo-suave: #f5f7fb;
+  --gris: #5a6270;
+}
+
+@theme inline {
+  --color-azul: var(--azul);
+  --color-azul-dark: var(--azul-dark);
+  --color-azul-light: var(--azul-light);
+  --color-amarillo: var(--amarillo);
+  --color-amarillo-light: var(--amarillo-light);
+  --color-tinta: var(--tinta);
+  --color-fondo: var(--fondo);
+  --color-fondo-suave: var(--fondo-suave);
+  --color-gris: var(--gris);
+  /* Futura (la del manual) es de pago: hasta tener licencia web se usa Jost,
+     una Futura libre de Google Fonts con el mismo dibujo geométrico. */
+  --font-sans: var(--font-jost), "Futura", "Century Gothic", Arial, sans-serif;
+}
+
+body {
+  background: var(--fondo);
+  color: var(--tinta);
+  font-family: var(--font-sans);
+}
